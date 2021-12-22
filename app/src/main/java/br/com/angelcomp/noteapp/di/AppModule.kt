@@ -2,10 +2,10 @@ package br.com.angelcomp.noteapp.di
 
 import android.app.Application
 import androidx.room.Room
-import androidx.room.RoomDatabase
 import br.com.angelcomp.noteapp.feature_note.data.data_source.NoteDatabase
 import br.com.angelcomp.noteapp.feature_note.data.repository.NoteRepositoryImpl
 import br.com.angelcomp.noteapp.feature_note.domain.repository.NoteRepository
+import br.com.angelcomp.noteapp.feature_note.domain.use_case.AddNote
 import br.com.angelcomp.noteapp.feature_note.domain.use_case.DeleteNotes
 import br.com.angelcomp.noteapp.feature_note.domain.use_case.GetNotes
 import br.com.angelcomp.noteapp.feature_note.domain.use_case.NoteUseCases
@@ -40,7 +40,8 @@ object AppModule {
     fun provideNoteUseCases(repository: NoteRepository): NoteUseCases {
         return NoteUseCases(
             getNotes = GetNotes(repository),
-            deleteNotes = DeleteNotes(repository)
+            deleteNote = DeleteNotes(repository),
+            addNote = AddNote(repository)
         )
     }
 }
