@@ -1,7 +1,7 @@
 package br.com.angelcomp.noteapp.feature_note.presentation.add_edit_note
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -23,7 +23,7 @@ fun TransparentHintTextField(
     onFocusChange: (FocusState) -> Unit
 ) {
     Box(
-        modifier
+        modifier = modifier
     ) {
         BasicTextField(
             value = text,
@@ -31,13 +31,12 @@ fun TransparentHintTextField(
             singleLine = singleLine,
             textStyle = textStyle,
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .onFocusChanged {
                     onFocusChange(it)
                 }
-
         )
-        if (isHintVisible) {
+        if(isHintVisible) {
             Text(text = hint, style = textStyle, color = Color.DarkGray)
         }
     }

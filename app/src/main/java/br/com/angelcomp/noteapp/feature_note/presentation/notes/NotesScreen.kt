@@ -18,6 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import br.com.angelcomp.noteapp.feature_note.presentation.notes.components.NoteItem
 import br.com.angelcomp.noteapp.feature_note.presentation.notes.components.OrderSection
+import br.com.angelcomp.noteapp.feature_note.presentation.util.Screen
 import kotlinx.coroutines.launch
 
 @ExperimentalAnimationApi
@@ -34,7 +35,7 @@ fun NotesScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-
+                    navController.navigate(Screen.AddEditNoteScreen.route)
                 },
                 backgroundColor = MaterialTheme.colors.primary
             ) {
@@ -70,7 +71,7 @@ fun NotesScreen(
             }
             AnimatedVisibility(
                 visible = state.isOrderSectionVisible,
-                enter = fadeIn() + slideInHorizontally(),
+                enter = fadeIn() + slideInVertically(),
                 exit = fadeOut() + slideOutVertically()
             ) {
                 OrderSection(
@@ -88,17 +89,22 @@ fun NotesScreen(
                 items(state.notes) { note ->
                     NoteItem(
                         note = note,
-                        modifier = Modifier.fillMaxWidth().clickable {
-
-                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                navController.navigate(
+                                    Screen.AddEditNoteScreen.route +
+                                            "?noteId=${note.id}&noteColor=${note.color}"
+                                )
+                            },
                         onDeleteClick = {
                             viewModel.onEvent(NotesEvent.DeleteNote(note))
                             scope.launch {
-                                 val result = scaffoldState.snackbarHostState.showSnackbar(
-                                     message = "Note deleted",
-                                     actionLabel = "Undo"
-                                 )
-                                if (result == SnackbarResult.ActionPerformed) {
+                                val result = scaffoldState.snackbarHostState.showSnackbar(
+                                    message = "Note deleted",
+                                    actionLabel = "Undo"
+                                )
+                                if(result == SnackbarResult.ActionPerformed) {
                                     viewModel.onEvent(NotesEvent.RestoreNote)
                                 }
                             }

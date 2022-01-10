@@ -42,7 +42,6 @@ fun AddEditNoteScreen(
             Color(if(noteColor != -1) noteColor else viewModel.noteColor.value)
         )
     }
-
     val scope = rememberCoroutineScope()
 
     LaunchedEffect(key1 = true) {
@@ -81,7 +80,7 @@ fun AddEditNoteScreen(
         ) {
             Row(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
                     .padding(8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -114,7 +113,6 @@ fun AddEditNoteScreen(
                     )
                 }
             }
-
             Spacer(modifier = Modifier.height(16.dp))
             TransparentHintTextField(
                 text = titleState.text,
@@ -127,9 +125,8 @@ fun AddEditNoteScreen(
                 },
                 isHintVisible = titleState.isHintVisible,
                 singleLine = true,
-                textStyle = MaterialTheme.typography.h5
+                textStyle = MaterialTheme.typography.h5,
             )
-
             Spacer(modifier = Modifier.height(16.dp))
             TransparentHintTextField(
                 text = contentState.text,
@@ -142,7 +139,6 @@ fun AddEditNoteScreen(
                 },
                 isHintVisible = contentState.isHintVisible,
                 textStyle = MaterialTheme.typography.body1,
-                modifier = Modifier.fillMaxHeight()
             )
         }
     }
